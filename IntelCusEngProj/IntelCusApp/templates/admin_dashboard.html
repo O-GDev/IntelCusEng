@@ -8,22 +8,21 @@
     <thead>
       <div style="display: flex;justify-content: flex-end;padding: 20px;background-color: transparent;">
         <form action="">
-          <select style="margin: 5px;border-radius: 5px;">
-            <option>7 Days</option>
-            <option>30 Days</option>
-            <option>90 Days</option>
-            <option>120 Days</option>
+          <select style="margin: 5px;border-radius: 5px;" onchange="filterTable()">
+            <option value="7days">7 Days</option>
+            <option value="30days">30 Days</option>
+            <option value="90days">90 Days</option>
+            <option value="120days">120 Days</option>
           </select>
           <select style="margin: 5px;border-radius: 5px;">
             <option>...select response category</option>
-            <option>Highest reccuring error</option>  
-            <option>=/>50 Threshold</option>
-            <option>=/>50 Threshold</option>
+            <option value="">Highest reccuring error</option>  
+            <option value="g50">>/=50 Threshold</option>
 
           </select>
-          <div style="margin: 5px;">
+          <!-- <div style="margin: 5px;">
             <button style="border-width: 0.5px;width:80px">Apply</button>
-          </div>
+          </div> -->
         </form>
       </div>
       <tr>
@@ -161,7 +160,11 @@
       var row=rows[i];
       var threshold = row.cells[5].textContent.trim();
 
-      if(selectedValue === "all")
+      if(selectedValue === "7days" || threshold===selectedValue){
+        row.style.display="";
+      }else{
+        row.style.display="none";
+      }
     }
   }
 </script>

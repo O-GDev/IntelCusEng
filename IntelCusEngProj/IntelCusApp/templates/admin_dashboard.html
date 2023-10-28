@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+<body>
+{% block content %} 
+<!-- <input type="text" id="table-search" placeholder="Search..."> -->
+
+<table class="table table-success table-striped" id="filterable-table">
+  
+    <thead>
+      <div style="display: flex;justify-content: flex-end;padding: 20px;background-color: transparent;">
+        <form action="">
+          <select style="margin: 5px;border-radius: 5px;">
+            <option>7 Days</option>
+            <option>30 Days</option>
+            <option>90 Days</option>
+            <option>120 Days</option>
+          </select>
+          <select style="margin: 5px;border-radius: 5px;">
+            <option>...select response category</option>
+            <option>Highest reccuring error</option>  
+            <option>=/>50 Threshold</option>
+            <option>=/>50 Threshold</option>
+
+          </select>
+          <div style="margin: 5px;">
+            <button style="border-width: 0.5px;width:80px">Apply</button>
+          </div>
+        </form>
+      </div>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Account No</th>
+        <th scope="col">Response Code</th>
+        <th scope="col">System Response</th>
+        <th scope="col">Threshold/Hr</th>
+        <th scope="col">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for d in data %}
+      <!-- {%if d%} -->
+      <tr>
+        <th scope="row"> {{d.id}} </th>
+        <th> {{d.account_number}} </th>
+        <td> {{d.response_code}} </td>
+        <td> {{d.error_message}} </td>
+        <td> {{d.threshold}} </td>
+        <td> {{d.date}} </td>
+      </tr> 
+      <!-- {% else %} 
+      <br><br><br>
+      <h1>No Data yet!!</h1>
+      {% endif %}   -->
+      {% endfor %} 
+    </tbody>
+  </table>
+  {% if data.has_other_pages %}
+  <ul class="pagination" style="margin-left: 20px;">
+    {% if data.has_previous %}
+      <li><a href="?page={{ data.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in data.paginator.page_range %}
+      {% if data.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li class="di"><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if data.has_next %}
+      <li><a href="?page={{ data.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}    
+  </ul>
+{% endif %}
+
+<div class="action" style="position: relative;margin-top: -50px;right: 10px;">
+  <button style="position: absolute;right: 10px;padding: 5px;box-shadow: 0px;">Export File</button>
+</div>
+<!-- <ul class="pagination" style="position: relative;margin-top: -50px;">
+  <li style="position: absolute;right: 10px;padding: 5px;">Export File</li>
+</ul> -->
+<div id="container" style="width: 75%;margin-bottom: 20px;margin-top: 50px;">
+  <canvas id="population-chart" data-url="{% url 'admin_dashboard' %}"></canvas>
+</div>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+  
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<!-- <script>
+
+  $(function () {
+
+    var $populationChart = $("#population-chart");
+    $.ajax({
+      url: $populationChart.data("url"),
+      success: function (datas) {
+
+        var ctx = $populationChart[0].getContext("2d");
+
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: datas.labels,
+            datasets: [{
+              label: 'Threshold',
+              backgroundColor: 'blue',
+              data: datas.data
+            }]          
+          },
+          options: {
+            responsive: true,
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'Frequency Bar Chart'
+            }
+          }
+        });
+
+      }
+    });
+
+  });
+
+</script> -->
+<!-- <script>
+  $(document).ready(function() {
+      var table = $('#filterable-table').DataTable();
+      
+      $('#table-search').on('keyup', function () {
+          table.search(this.value).draw();
+      });
+  });
+</script> -->
+<script>
+  var btnXlsx = document.querySelectorAll('.action button')[0]
+  btnXlsx.onclick = () => exportData('xlsx')
+  // btnxls.onclick = () => exportData('xls')
+  // btnCsv.onclick = () => exportData('csv') 
+  function exportData(type){
+    const fileName = 'Reports.' + type
+    const table = document.getElementById("filterable-table")
+    const wb = XLSX.utils.table_to_book(table)
+    XLSX.writeFile(wb, fileName)
+  }
+
+  function filterTable(){
+    var dropdown = document.getElementById()
+    var selectedValue = dropdown.ariaValue;
+    var table = document.getElementById('')
+    var rows = document.getElementsByTagName("tr")
+
+    for (var i=1;i<rows.lenght;i++){
+      var row=rows[i];
+      var threshold = row.cells[5].textContent.trim();
+
+      if(selectedValue === "all")
+    }
+  }
+</script>
+
+<!-- {% endblock %} -->
+</body>
+

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="width: 60%;margin: auto;margin-top: 30px;">
+    <h2 style="text-align: center;margin-bottom: 10px;">Admin Login</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <p style="text-align: start;margin-left: 30px;color: #9B3FF6;font-weight: 500;">Email Address<span style="color: rgb(223, 115, 87);">*</span></p>
+        <p style="text-align: start;margin-left: 30px;margin-top: -15px;">
+            <input type="text" value="email" name="email" style="width: 90%;height: 40px;border-radius: 25px;border-width: 1px;border-color: #69696999;padding: 10px;">
+        </p>
+        <!-- <br> -->
+        <p style="text-align: start;margin-left: 30px;color: #9B3FF6;font-weight: 500;">Password<span style="color: rgb(223, 115, 87);">*</span></p>
+        <p style="text-align: start;margin-left: 30px;margin-top: -15px;">
+            <input type="password" value="password" name="password" style="width: 90%;height: 40px;border-radius: 25px;border-width: 1px;border-color: #69696999;padding: 10px;">
+        </p>
+        <p style="text-align: end;margin-right: 80px;color: #9B3FF6;font-weight: 300;margin-top: -20px;">forgot Password?</p>
+        <div style="display: flex;justify-content: space-around;">
+            <!-- <div></div> -->
+            <div>   
+                     <input type="submit" value="Login" class="submit" style="border-color: #9B3FF6;padding: 3px;font-size: 25px;border-radius: 15px;width: 150px;border-width: 2px;">
+            </div>
+            <!-- <div></div>             -->
+        </div>
+    </form>
+    
+</div>
+{% endblock %}  
